@@ -142,7 +142,8 @@ jobs:
           -DANDROID_PLATFORM=android-21 \
           -DGDAL_BUILD_OPTIONAL_DRIVERS=OFF \
           -DOGR_BUILD_OPTIONAL_DRIVERS=OFF \
-          -DPROJ_ROOT=$GITHUB_WORKSPACE/proj-install \
+          -DPROJ_INCLUDE_DIR=$GITHUB_WORKSPACE/proj-install/include \
+          -DPROJ_LIBRARY=$GITHUB_WORKSPACE/proj-install/lib/libproj.a \
           -DSQLite3_INCLUDE_DIR=$GITHUB_WORKSPACE/sqlite-install/include \
           -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a
         cmake --build .
