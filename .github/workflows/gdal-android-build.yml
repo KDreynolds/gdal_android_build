@@ -43,6 +43,7 @@ jobs:
       run: |
         git clone https://gitlab.com/libtiff/libtiff.git
         cd libtiff
+        rm -rf build
         mkdir build
         cd build
         cmake .. \
