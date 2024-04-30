@@ -34,6 +34,7 @@ jobs:
       run: |
         git clone https://github.com/tmizu23/pdfium_build_gdal_3_8.git
         cd pdfium_build_gdal_3_8
+        ls -la  # This line will list all files and directories
         ./build_android.sh
 
     - name: Build GDAL
