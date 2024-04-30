@@ -64,26 +64,27 @@ jobs:
         mkdir build
         cd build
         cmake .. \
-          -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
-          -DANDROID_ABI=arm64-v8a \
-          -DANDROID_PLATFORM=android-21 \
-          -DBUILD_CURL_TESTS=OFF \
-          -DCURL_DISABLE_LDAP=ON \
-          -DCURL_DISABLE_LDAPS=ON \
-          -DCURL_DISABLE_TELNET=ON \
-          -DCURL_DISABLE_DICT=ON \
-          -DCURL_DISABLE_FILE=ON \
-          -DCURL_DISABLE_TFTP=ON \
-          -DCURL_DISABLE_RTSP=ON \
-          -DCURL_DISABLE_POP3=ON \
-          -DCURL_DISABLE_IMAP=ON \
-          -DCURL_DISABLE_SMTP=ON \
-          -DCURL_DISABLE_GOPHER=ON \
-          -DCURL_DISABLE_SMB=ON \
-          -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/curl-install \
-          -DOPENSSL_ROOT_DIR=$GITHUB_WORKSPACE/openssl-install \
-          -DOPENSSL_CRYPTO_LIBRARY=$GITHUB_WORKSPACE/openssl-install/lib/libcrypto.a \
-          -DOPENSSL_INCLUDE_DIR=$GITHUB_WORKSPACE/openssl-install/include/openssl
+            -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
+            -DANDROID_ABI=arm64-v8a \
+            -DANDROID_PLATFORM=android-21 \
+            -DBUILD_CURL_TESTS=OFF \
+            -DCURL_DISABLE_LDAP=ON \
+            -DCURL_DISABLE_LDAPS=ON \
+            -DCURL_DISABLE_TELNET=ON \
+            -DCURL_DISABLE_DICT=ON \
+            -DCURL_DISABLE_FILE=ON \
+            -DCURL_DISABLE_TFTP=ON \
+            -DCURL_DISABLE_RTSP=ON \
+            -DCURL_DISABLE_POP3=ON \
+            -DCURL_DISABLE_IMAP=ON \
+            -DCURL_DISABLE_SMTP=ON \
+            -DCURL_DISABLE_GOPHER=ON \
+            -DCURL_DISABLE_SMB=ON \
+            -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/curl-install \
+            -DOPENSSL_ROOT_DIR=$GITHUB_WORKSPACE/openssl-install \
+            -DOPENSSL_CRYPTO_LIBRARY=$GITHUB_WORKSPACE/openssl-install/lib/libcrypto.a \
+            -DOPENSSL_SSL_LIBRARY=$GITHUB_WORKSPACE/openssl-install/lib/libssl.a \
+            -DOPENSSL_INCLUDE_DIR=$GITHUB_WORKSPACE/openssl-install/include/openssl
         cmake --build .
         cmake --install .
 
