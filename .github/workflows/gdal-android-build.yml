@@ -36,13 +36,12 @@ jobs:
         cd pdfium_build_gdal_3_8
         ls -la  # Lists all files to verify contents
 
-    - name: Check current directory and adjust permissions
+    - name: Set file permissions and run script
       run: |
+        cd pdfium_build_gdal_3_8  # Make sure this is the correct path
         pwd
         chmod +x build_linux.sh
-
-    - name: Build PDFium using Linux script
-      run: ./build_linux.sh
+        ./build_linux.sh
 
 
     - name: Build GDAL
