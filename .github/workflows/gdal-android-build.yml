@@ -25,6 +25,7 @@ jobs:
     - name: Install JAXB Dependencies
       run: |
         sudo apt-get install -y libjaxb-java
+        sudo mkdir -p ${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs
         sudo ln -s /usr/share/java/jaxb-api.jar ${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/jaxb-api.jar
         sudo ln -s /usr/share/java/jaxb-impl.jar ${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/jaxb-impl.jar
         sudo ln -s /usr/share/java/activation.jar ${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/activation.jar
