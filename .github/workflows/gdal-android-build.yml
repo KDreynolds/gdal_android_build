@@ -39,10 +39,12 @@ jobs:
         make
         make install
 
-    - name: Build TIFF
+    - name: Build TIFF 
       run: |
         git clone https://gitlab.com/libtiff/libtiff.git
         cd libtiff
+        # Comment out line 156 to skip add_subdirectory(build)
+        sed -i '156s/^/#/' CMakeLists.txt  
         rm -rf build
         cmake . \
           -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
