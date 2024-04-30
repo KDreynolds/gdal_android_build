@@ -31,6 +31,21 @@ jobs:
       run: |
         sudo apt-get install -y ninja-build
 
+    - name: Build PROJ
+      run: |
+        git clone https://github.com/OSGeo/PROJ.git
+        cd PROJ
+        mkdir build
+        cd build
+        cmake .. \
+          -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
+          -DANDROID_ABI=arm64-v8a \
+          -DANDROID_PLATFORM=android-21 \
+          -DBUILD_SHARED_LIBS=OFF \
+          -DBUILD_TESTING=OFF
+        cmake --build .
+        cmake --install . --prefix $GITHUB_WORKSPACE/proj-install
+
     - name: Build GDAL
       run: |
         git clone https://github.com/OSGeo/gdal.git
@@ -42,7 +57,8 @@ jobs:
           -DANDROID_ABI=arm64-v8a \
           -DANDROID_PLATFORM=android-21 \
           -DGDAL_BUILD_OPTIONAL_DRIVERS=OFF \
-          -DOGR_BUILD_OPTIONAL_DRIVERS=OFF
+          -DOGR_BUILD_OPTIONAL_DRIVERS=OFF \
+          -DPROJ_ROOT=$GITHUB_WORKSPACE/proj-install
         cmake --build .
 
     - name: Upload Artifact
