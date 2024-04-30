@@ -1,60 +1,48 @@
-name: Build GDAL for Android
+name: GDAL Android Build
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-    - name: Set up Java
+    - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
-        distribution: 'adopt'  # or 'temurin', 'zulu', etc.
-        java-package: jdk
-        architecture: x64
+        java-version: '17'
+        distribution: 'adopt'
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential
-        # Add other dependencies specific to your project
+    - name: Install Android SDK
+      uses: android-actions/setup-android@v2
 
-    - name: Clone repository
+    - name: Install JAXB Dependencies
       run: |
-        git clone https://github.com/tmizu23/pdfium_build_gdal_3_8.git
-        cd pdfium_build_gdal_3_8
-        ls -la  # Lists all files to verify contents
-        
-    - name: Set up depot_tools
-      run: |
-        echo "${{ github.workspace }}/pdfium_build_gdal_3_8/depot_tools" >> $GITHUB_PATH
+        sudo apt-get install -y libjaxb-java
+        sudo ln -s /usr/share/java/jaxb-api.jar ${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/jaxb-api.jar
+        sudo ln -s /usr/share/java/jaxb-impl.jar ${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/jaxb-impl.jar
+        sudo ln -s /usr/share/java/activation.jar ${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/activation.jar
 
-    - name: Set file permissions and run script
+    - name: Install NDK
       run: |
-        cd pdfium_build_gdal_3_8  # Make sure this is the correct path
-        pwd
-        chmod +x build_linux.sh
-        ./build_linux.sh
-
+        sudo apt-get install -y ninja-build
+        echo "y" | sudo ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager --install "ndk;21.4.7075529"
 
     - name: Build GDAL
       run: |
-        ./build_externallib_android.sh
-        ./build_android.sh
+        git clone https://github.com/OSGeo/gdal.git
+        cd gdal
+        ./configure --host=aarch64-linux-android --with-proj=/usr/local --with-sqlite3=/usr/local --without-libtool
+        make -j$(nproc)
 
-    - name: Upload Artifacts
+    - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: gdal-android
-        path: path/to/your/output/files
+        path: gdal/swig/java/gdal.jar
