@@ -25,7 +25,10 @@ jobs:
     - name: Install NDK
       run: |
         sudo apt-get install -y ninja-build
-        sudo ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager --install "ndk;21.4.7075529" --classpath ${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/jaxb-core.jar:${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/jaxb-impl.jar:${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/activation.jar
+        echo 'export CLASSPATH=${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/jaxb-core.jar:${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/jaxb-impl.jar:${ANDROID_SDK_ROOT}/tools/lib/jaxb-libs/activation.jar' > sdkmanager.sh
+        echo 'echo "y" | ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager --install "ndk;21.4.7075529"' >> sdkmanager.sh
+        chmod +x sdkmanager.sh
+        sudo ./sdkmanager.sh
 
     - name: Build GDAL
       run: |
