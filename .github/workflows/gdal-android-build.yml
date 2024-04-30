@@ -16,7 +16,7 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'adopt'
 
     - name: Install Android SDK
@@ -25,7 +25,7 @@ jobs:
     - name: Install NDK
       run: |
         sudo apt-get install -y ninja-build
-        echo "y" | sudo ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager --install "ndk;21.4.7075529"
+        sudo ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager --install "ndk;21.4.7075529" --add-modules java.xml.bind
 
     - name: Build GDAL
       run: |
