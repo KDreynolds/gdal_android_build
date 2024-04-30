@@ -19,7 +19,10 @@ jobs:
     - name: Set up Java
       uses: actions/setup-java@v2
       with:
-        java-version: '11'  # Check if you need a specific version for your build
+        java-version: '11'
+        distribution: 'adopt'  # or 'temurin', 'zulu', etc.
+        java-package: jdk
+        architecture: x64
 
     - name: Install dependencies
       run: |
