@@ -46,6 +46,11 @@ jobs:
         ./Configure android-arm64 --prefix=$GITHUB_WORKSPACE/openssl-install
         make
         make install_sw
+      shell: /usr/bin/bash -e {0}
+      env:
+        JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/17.0.11-9/x64
+        ANDROID_HOME: /usr/local/lib/android/sdk
+        ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
         
     - name: Build CURL
       run: |
