@@ -30,12 +30,15 @@ jobs:
         sudo apt-get install -y build-essential
         # Add other dependencies specific to your project
 
-    - name: Clone and build PDFium
+    - name: Clone and prepare build environment
       run: |
         git clone https://github.com/tmizu23/pdfium_build_gdal_3_8.git
         cd pdfium_build_gdal_3_8
-        ls -la  # This line will list all files and directories
-        ./build_android.sh
+        ls -la  # Lists all files to verify contents
+
+    - name: Build PDFium for Linux (Check if adaptable for Android)
+      run: ./build_linux.sh
+
 
     - name: Build GDAL
       run: |
