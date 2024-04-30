@@ -35,6 +35,7 @@ jobs:
       run: |
         git clone https://github.com/OSGeo/gdal.git
         cd gdal
+        ls -la
         ./configure --host=aarch64-linux-android --with-proj=/usr/local --with-sqlite3=/usr/local --without-libtool
         make -j$(nproc)
 
