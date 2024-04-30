@@ -53,6 +53,7 @@ jobs:
       run: |
         mkdir -p $GITHUB_WORKSPACE/openssl-install/include
         cp -r openssl/include/openssl $GITHUB_WORKSPACE/openssl-install/include/
+        mkdir -p $GITHUB_WORKSPACE/openssl-install/lib
         cp openssl/libcrypto.a $GITHUB_WORKSPACE/openssl-install/lib/
         cp openssl/libssl.a $GITHUB_WORKSPACE/openssl-install/lib/
 
