@@ -36,7 +36,7 @@ jobs:
         cd pdfium_build_gdal_3_8
         ls -la  # Lists all files to verify contents
         
-     - name: Set up depot_tools
+    - name: Set up depot_tools
       run: |
         echo "${{ github.workspace }}/pdfium_build_gdal_3_8/depot_tools" >> $GITHUB_PATH
 
