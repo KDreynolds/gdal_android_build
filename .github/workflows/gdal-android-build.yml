@@ -29,7 +29,7 @@ jobs:
 
     - name: Install Build Dependencies
       run: |
-        sudo apt-get install -y ninja-build tcl
+        sudo apt-get install -y ninja-build tcl libtiff-dev
 
     - name: Build SQLite3
       run: |
@@ -38,6 +38,21 @@ jobs:
         ./configure --host=aarch64-linux-android --prefix=$GITHUB_WORKSPACE/sqlite-install
         make
         make install
+
+    - name: Build TIFF
+      run: |
+        git clone https://gitlab.com/libtiff/libtiff.git
+        cd libtiff
+        mkdir build
+        cd build
+        cmake .. \
+          -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
+          -DANDROID_ABI=arm64-v8a \
+          -DANDROID_PLATFORM=android-21 \
+          -DBUILD_SHARED_LIBS=OFF \
+          -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/tiff-install
+        cmake --build .
+        cmake --install .
 
     - name: Build PROJ
       run: |
@@ -51,6 +66,8 @@ jobs:
           -DANDROID_PLATFORM=android-21 \
           -DBUILD_SHARED_LIBS=OFF \
           -DBUILD_TESTING=OFF \
+          -DTIFF_INCLUDE_DIR=$GITHUB_WORKSPACE/tiff-install/include \
+          -DTIFF_LIBRARY=$GITHUB_WORKSPACE/tiff-install/lib/libtiff.a \
           -DSQLite3_INCLUDE_DIR=$GITHUB_WORKSPACE/sqlite-install/include \
           -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a
         cmake --build .
