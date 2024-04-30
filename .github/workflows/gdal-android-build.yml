@@ -122,7 +122,9 @@ jobs:
           -DTIFF_INCLUDE_DIR=$GITHUB_WORKSPACE/tiff-install/include \
           -DTIFF_LIBRARY=$GITHUB_WORKSPACE/tiff-install/lib/libtiff.a \
           -DSQLite3_INCLUDE_DIR=$GITHUB_WORKSPACE/sqlite-install/include \
-          -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a
+          -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a \
+          -DCURL_INCLUDE_DIR=$GITHUB_WORKSPACE/curl-install/include \
+          -DCURL_LIBRARY=$GITHUB_WORKSPACE/curl-install/lib/libcurl.a
         cmake --build .
         cmake --install . --prefix $GITHUB_WORKSPACE/proj-install
 
