@@ -38,12 +38,19 @@ jobs:
         ./configure --host=aarch64-linux-android --prefix=$GITHUB_WORKSPACE/sqlite-install
         make
         make install
-        
+
+    - name: Set up Android NDK Environment
+      run: |
+        echo "ANDROID_NDK_ROOT=$ANDROID_NDK_ROOT" >> $GITHUB_ENV
+        echo "ANDROID_NDK=$ANDROID_NDK_ROOT" >> $GITHUB_ENV
+        echo "NDKROOT=$ANDROID_NDK_ROOT" >> $GITHUB_ENV
+        echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+
     - name: Build OpenSSL
       run: |
         git clone https://github.com/openssl/openssl.git
         cd openssl
-        ./Configure android-arm64 --prefix=$GITHUB_WORKSPACE/openssl-install
+        ./Configure android-arm64 no-async
         make
         make install_sw
       shell: /usr/bin/bash -e {0}
@@ -51,7 +58,14 @@ jobs:
         JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/17.0.11-9/x64
         ANDROID_HOME: /usr/local/lib/android/sdk
         ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
-        
+
+    - name: Copy OpenSSL Files
+      run: |
+        mkdir -p $GITHUB_WORKSPACE/openssl-install/include
+        cp -r openssl/include/openssl $GITHUB_WORKSPACE/openssl-install/include/
+        cp openssl/libcrypto.a $GITHUB_WORKSPACE/openssl-install/lib/
+        cp openssl/libssl.a $GITHUB_WORKSPACE/openssl-install/lib/
+
     - name: Build CURL
       run: |
         git clone https://github.com/curl/curl.git
@@ -78,16 +92,15 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/curl-install \
           -DOPENSSL_ROOT_DIR=$GITHUB_WORKSPACE/openssl-install \
           -DOPENSSL_CRYPTO_LIBRARY=$GITHUB_WORKSPACE/openssl-install/lib/libcrypto.a \
-          -DOPENSSL_INCLUDE_DIR=$GITHUB_WORKSPACE/openssl-install/include
+          -DOPENSSL_INCLUDE_DIR=$GITHUB_WORKSPACE/openssl-install/include/openssl
         cmake --build .
         cmake --install .
 
-    - name: Build TIFF 
+    - name: Build TIFF
       run: |
         git clone https://gitlab.com/libtiff/libtiff.git
         cd libtiff
-        # Comment out line 156 to skip add_subdirectory(build)
-        sed -i '156s/^/#/' CMakeLists.txt  
+        sed -i '156s/^/#/' CMakeLists.txt
         rm -rf build
         cmake . \
           -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
