@@ -39,6 +39,14 @@ jobs:
         make
         make install
         
+    - name: Build OpenSSL
+      run: |
+        git clone https://github.com/openssl/openssl.git
+        cd openssl
+        ./Configure android-arm64 --prefix=$GITHUB_WORKSPACE/openssl-install
+        make
+        make install_sw
+        
     - name: Build CURL
       run: |
         git clone https://github.com/curl/curl.git
@@ -62,7 +70,10 @@ jobs:
           -DCURL_DISABLE_SMTP=ON \
           -DCURL_DISABLE_GOPHER=ON \
           -DCURL_DISABLE_SMB=ON \
-          -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/curl-install
+          -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/curl-install \
+          -DOPENSSL_ROOT_DIR=$GITHUB_WORKSPACE/openssl-install \
+          -DOPENSSL_CRYPTO_LIBRARY=$GITHUB_WORKSPACE/openssl-install/lib/libcrypto.a \
+          -DOPENSSL_INCLUDE_DIR=$GITHUB_WORKSPACE/openssl-install/include
         cmake --build .
         cmake --install .
 
