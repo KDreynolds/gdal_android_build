@@ -41,8 +41,8 @@ jobs:
         pwd
         chmod +x build_linux.sh
 
-- name: Build PDFium using Linux script
-  run: ./build_linux.sh
+    - name: Build PDFium using Linux script
+      run: ./build_linux.sh
 
 
     - name: Build GDAL
