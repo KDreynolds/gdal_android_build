@@ -119,7 +119,7 @@ jobs:
           -DANDROID_PLATFORM=android-21 \
           -DBUILD_SHARED_LIBS=OFF \
           -DBUILD_TESTING=OFF \
-          -DBUILD_CCT=OFF \
+          -DBUILD_APPS=OFF \
           -DTIFF_INCLUDE_DIR=$GITHUB_WORKSPACE/tiff-install/include \
           -DTIFF_LIBRARY=$GITHUB_WORKSPACE/tiff-install/lib/libtiff.a \
           -DSQLite3_INCLUDE_DIR=$GITHUB_WORKSPACE/sqlite-install/include \
