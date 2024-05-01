@@ -33,11 +33,23 @@ jobs:
 
     - name: Build SQLite3
       run: |
-        git clone https://github.com/sqlite/sqlite.git
-        cd sqlite
-        ./configure --host=aarch64-linux-android --prefix=$GITHUB_WORKSPACE/sqlite-install
-        make
-        make install
+        git clone https://github.com/azadkuh/sqlite-amalgamation.git
+        cd sqlite-amalgamation
+        mkdir build
+        cd build
+        cmake .. \
+          -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
+          -DANDROID_ABI=arm64-v8a \
+          -DANDROID_PLATFORM=android-21 \
+          -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/sqlite-install \
+          -DSQLITE_ENABLE_RTREE=ON \
+          -DSQLITE_ENABLE_JSON1=ON \
+          -DSQLITE_ENABLE_FTS5=ON \
+          -DSQLITE_ENABLE_UPDATE_DELETE_LIMIT=ON \
+          -DSQLITE_ENABLE_UNCOMMITTED_STATEMENT_SCAN=ON \
+          -DSQLITE_DEFAULT_SYNCHRONOUS=3
+        cmake --build .
+        cmake --install .
 
     - name: Build OpenSSL
       run: |
@@ -103,7 +115,8 @@ jobs:
           -DANDROID_ABI=arm64-v8a \
           -DANDROID_PLATFORM=android-21 \
           -DBUILD_SHARED_LIBS=OFF \
-          -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/tiff-install
+          -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/tiff-install \
+          -DTIFF_BUILD_CODEC=abi_l_lzw
         cmake --build .
         cmake --install .
 
