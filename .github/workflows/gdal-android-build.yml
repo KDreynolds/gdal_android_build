@@ -35,7 +35,13 @@ jobs:
       run: |
         git clone https://github.com/sqlite/sqlite.git
         cd sqlite
-        ./configure --host=aarch64-linux-android --prefix=$GITHUB_WORKSPACE/sqlite-install
+        ./configure --host=aarch64-linux-android \
+            --prefix=$GITHUB_WORKSPACE/sqlite-install \
+            --enable-rtree \
+            --enable-json1 \
+            --enable-fts5 \
+            --enable-update-delete-limit \
+            --enable-uncommitted-statement-scan
         make
         make install
 
@@ -125,6 +131,9 @@ jobs:
           -DTIFF_LIBRARY=$GITHUB_WORKSPACE/tiff-install/lib/libtiff.a \
           -DSQLite3_INCLUDE_DIR=$GITHUB_WORKSPACE/sqlite-install/include \
           -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a \
+          -DSQLITE3_ENABLE_RTREE=ON \
+          -DSQLITE3_ENABLE_JSON1=ON \
+          -DSQLITE3_ENABLE_FTS5=ON \
           -DCURL_INCLUDE_DIR=$GITHUB_WORKSPACE/curl-install/include \
           -DCURL_LIBRARY=$GITHUB_WORKSPACE/curl-install/lib/libcurl.a \
           -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/proj-install
