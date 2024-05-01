@@ -39,14 +39,18 @@ jobs:
         make
         make install
 
-    - name: Download Pre-built TIFF
+    - name: Build Official TIFF
       run: |
-        curl -L -o tiff.zip https://github.com/lxb9040/androidlibtiff/releases/download/v4.4.0/tiff-arm64.zip
-        unzip tiff.zip
-        mkdir -p $GITHUB_WORKSPACE/tiff-install/include
-        mkdir -p $GITHUB_WORKSPACE/tiff-install/lib
-        cp tiff/include/* $GITHUB_WORKSPACE/tiff-install/include/
-        cp tiff/lib/libtiff.a $GITHUB_WORKSPACE/tiff-install/lib/
+        git clone https://gitlab.com/libtiff/tiff.git
+        cd tiff
+        ./autogen.sh
+        ./configure --host=aarch64-linux-android \
+            --prefix=$GITHUB_WORKSPACE/tiff-install \
+            --disable-shared \
+            --enable-lzw \
+            --enable-old-jpeg
+        make
+        make install
 
     - name: Build OpenSSL
       run: |
