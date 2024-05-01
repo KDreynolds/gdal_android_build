@@ -51,7 +51,11 @@ jobs:
           -DANDROID_PLATFORM=android-21 \
           -DBUILD_SHARED_LIBS=OFF \
           -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/tiff-install \
-          -DTIFF_BUILD_CODEC=abi_l_lzw
+          -DTIFF_BUILD_CODEC=abi_l_lzw \
+          -DTIFF_EXTRA_COMPILERS=ON \
+          -DBUILD_ENCODERS=ON \
+          -DBUILD_DECODERS=ON \
+          -DBUILD_CPP=ON
         cmake --build .
         cmake --install .
 
