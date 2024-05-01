@@ -105,7 +105,7 @@ jobs:
         cmake --install .
 
     - name: Build Official TIFF
-    run: |
+      run: |
         git clone git://gitlab.com/libtiff/tiff.git
         cd tiff
         ./autogen.sh
