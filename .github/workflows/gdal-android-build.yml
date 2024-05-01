@@ -105,8 +105,8 @@ jobs:
         cmake --install .
 
     - name: Build Official TIFF
-      run: |
-        git clone https://gitlab.com/libtiff/tiff.git
+    run: |
+        git clone git://gitlab.com/libtiff/tiff.git
         cd tiff
         ./autogen.sh
         ./configure --host=aarch64-linux-android \
