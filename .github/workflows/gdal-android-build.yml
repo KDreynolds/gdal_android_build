@@ -156,7 +156,6 @@ jobs:
           -DGDAL_BUILD_OPTIONAL_DRIVERS=OFF \
           -DOGR_BUILD_OPTIONAL_DRIVERS=OFF \
           -DPYTHON_EXECUTABLE=/bin/false \
-          -DSWIG_EXECUTABLE=/bin/false \
           -DENABLE_DOXYGEN=OFF \
           -DBUILD_APPS=OFF \
           -DPROJ_INCLUDE_DIR=$GITHUB_WORKSPACE/proj-install/include \
