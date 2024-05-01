@@ -155,7 +155,7 @@ jobs:
           -DSQLite3_INCLUDE_DIR=$GITHUB_WORKSPACE/sqlite-install/include \
           -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a \
           -DACCEPT_MISSING_SQLITE3_MUTEX_ALLOC:BOOL=ON
-        cmake --build .
+        make VERBOSE=1
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
