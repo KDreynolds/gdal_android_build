@@ -106,7 +106,7 @@ jobs:
 
     - name: Build Official TIFF
       run: |
-        git clone git://gitlab.com/libtiff/tiff.git
+        git clone https://github.com/libtiff/libtiff.git tiff
         cd tiff
         ./autogen.sh
         ./configure --host=aarch64-linux-android \
