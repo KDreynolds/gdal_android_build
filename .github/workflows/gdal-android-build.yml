@@ -31,14 +31,13 @@ jobs:
       run: |
         sudo apt-get install -y ninja-build tcl
 
-    - name: Download Pre-built SQLite3
+    - name: Build SQLite3
       run: |
-        curl -L -o sqlite3.zip https://github.com/lxb9040/androidlibtiff/releases/download/v3.37.0/sqlite3-arm64.zip
-        unzip sqlite3.zip
-        mkdir -p $GITHUB_WORKSPACE/sqlite-install/include
-        mkdir -p $GITHUB_WORKSPACE/sqlite-install/lib
-        cp sqlite3/include/* $GITHUB_WORKSPACE/sqlite-install/include/
-        cp sqlite3/lib/libsqlite3.a $GITHUB_WORKSPACE/sqlite-install/lib/
+        git clone https://github.com/sqlite/sqlite.git
+        cd sqlite
+        ./configure --host=aarch64-linux-android --prefix=$GITHUB_WORKSPACE/sqlite-install
+        make
+        make install
 
     - name: Download Pre-built TIFF
       run: |
@@ -143,7 +142,7 @@ jobs:
           -DPROJ_INCLUDE_DIR=$GITHUB_WORKSPACE/proj-install/include \
           -DPROJ_LIBRARY=$GITHUB_WORKSPACE/proj-install/lib/libproj.a \
           -DSQLite3_INCLUDE_DIR=$GITHUB_WORKSPACE/sqlite-install/include \
-          -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a
+          -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a 
         cmake --build .
 
     - name: Upload Artifact
