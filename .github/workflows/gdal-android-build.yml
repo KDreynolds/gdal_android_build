@@ -149,7 +149,8 @@ jobs:
           -DPROJ_INCLUDE_DIR=$GITHUB_WORKSPACE/proj-install/include \
           -DPROJ_LIBRARY=$GITHUB_WORKSPACE/proj-install/lib/libproj.a \
           -DSQLite3_INCLUDE_DIR=$GITHUB_WORKSPACE/sqlite-install/include \
-          -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a
+          -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a \
+          -DACCEPT_MISSING_SQLITE3_MUTEX_ALLOC:BOOL=ON
         cmake --build .
 
     - name: Upload Artifact
