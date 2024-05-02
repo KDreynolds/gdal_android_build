@@ -180,6 +180,8 @@ jobs:
           -DPROJ_LIBRARY=$GITHUB_WORKSPACE/proj-install/lib/libproj.a \
           -DSQLite3_INCLUDE_DIR=$GITHUB_WORKSPACE/sqlite-install/include \
           -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a \
+          -DTIFF_INCLUDE_DIR=$GITHUB_WORKSPACE/tiff-install/include \
+          -DTIFF_LIBRARY=$GITHUB_WORKSPACE/tiff-install/lib/libtiff.a \
           -DACCEPT_MISSING_SQLITE3_MUTEX_ALLOC:BOOL=ON
         make VERBOSE=1
 
