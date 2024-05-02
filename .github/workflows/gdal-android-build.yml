@@ -184,6 +184,7 @@ jobs:
           -DTIFF_LIBRARY=$GITHUB_WORKSPACE/tiff-install/lib/libtiff.a \
           -DCURL_INCLUDE_DIR=$GITHUB_WORKSPACE/curl-install/include \
           -DCURL_LIBRARY=$GITHUB_WORKSPACE/curl-install/lib/libcurl.a \
+          -DCMAKE_DISABLE_FIND_PACKAGE_CURL=ON \
           -DACCEPT_MISSING_SQLITE3_MUTEX_ALLOC:BOOL=ON
         make VERBOSE=1
 
