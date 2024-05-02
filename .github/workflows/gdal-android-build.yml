@@ -186,8 +186,8 @@ jobs:
           -DCURL_LIBRARY=$GITHUB_WORKSPACE/curl-install/lib/libcurl.a \
           -DCMAKE_DISABLE_FIND_PACKAGE_CURL=ON \
           -DACCEPT_MISSING_SQLITE3_MUTEX_ALLOC:BOOL=ON \
-          -DCMAKE_EXE_LINKER_FLAGS="$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a" \
-          -DCMAKE_SHARED_LINKER_FLAGS="$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a"
+          -DCMAKE_EXE_LINKER_FLAGS="-L$GITHUB_WORKSPACE/sqlite-install/lib -L$GITHUB_WORKSPACE/curl-install/lib -lsqlite3 -lcurl" \
+          -DCMAKE_SHARED_LINKER_FLAGS="-L$GITHUB_WORKSPACE/sqlite-install/lib -L$GITHUB_WORKSPACE/curl-install/lib -lsqlite3 -lcurl"
         make VERBOSE=1
 
     - name: Upload Artifact
