@@ -182,6 +182,8 @@ jobs:
           -DSQLite3_LIBRARY=$GITHUB_WORKSPACE/sqlite-install/lib/libsqlite3.a \
           -DTIFF_INCLUDE_DIR=$GITHUB_WORKSPACE/tiff-install/include \
           -DTIFF_LIBRARY=$GITHUB_WORKSPACE/tiff-install/lib/libtiff.a \
+          -DCURL_INCLUDE_DIR=$GITHUB_WORKSPACE/curl-install/include \
+          -DCURL_LIBRARY=$GITHUB_WORKSPACE/curl-install/lib/libcurl.a \
           -DACCEPT_MISSING_SQLITE3_MUTEX_ALLOC:BOOL=ON
         make VERBOSE=1
 
